@@ -22,6 +22,14 @@ import com.kelompok4.serena.ui.navigation.BottomNavItem
 import com.kelompok4.serena.ui.navigation.Routes
 import com.kelompok4.serena.ui.navigation.getAllBottomNavItems
 import com.kelompok4.serena.ui.theme.*
+import com.kelompok4.serena.ui.screens.*
+import com.example.serena.ui.screens.ActivityDetailScreen
+import com.example.serena.ui.screens.ArticleDetailScreen
+import com.example.serena.ui.screens.ArticleListScreen
+import com.example.serena.ui.screens.SelfCareScreen
+
+// ✅ Ganti import agar sesuai package kamu, bukan com.example.serena
+// import com.example.serena.ui.screens.SelfCareScreen ❌
 
 @Composable
 fun MainScreen(userEmail: String) {
@@ -123,7 +131,10 @@ fun NavigationGraph(
         modifier = modifier
     ) {
         composable(Routes.HOME) { HomeScreen() }
-        composable(Routes.SELF_CARE) { SelfCareScreen() }
+
+        // ✅ tambahkan navController ke SelfCareScreen agar navigate() berfungsi
+        composable(Routes.SELF_CARE) { SelfCareScreen(navController = navController) }
+
         composable(Routes.KONSELING) {
             CounselingScreen(navController = navController)
         }
@@ -138,11 +149,21 @@ fun NavigationGraph(
             ProfileDetailScreen(navController = navController, userEmail = email)
         }
 
-
         composable("edit_value/{email}/{field}") { backStackEntry ->
             val email = backStackEntry.arguments?.getString("email") ?: ""
             val field = backStackEntry.arguments?.getString("field") ?: ""
             EditValueScreen(navController = navController, userEmail = email, field = field)
+        }
+
+        // ✅ Tambahkan route untuk halaman detail artikel & kegiatan
+        composable("articleDetail/{id}") { backStackEntry ->
+            val articleId = backStackEntry.arguments?.getString("id")?.toIntOrNull() ?: 0
+            ArticleDetailScreen(navController = navController, articleId = articleId)
+        }
+
+        composable("activityDetail/{id}") { backStackEntry ->
+            val activityId = backStackEntry.arguments?.getString("id")?.toIntOrNull() ?: 0
+            ActivityDetailScreen(navController = navController, activityId = activityId)
         }
     }
 }
