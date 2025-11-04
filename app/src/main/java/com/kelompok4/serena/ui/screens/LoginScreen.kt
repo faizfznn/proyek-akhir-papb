@@ -1,5 +1,6 @@
 package com.kelompok4.serena.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,6 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -32,7 +34,7 @@ import com.kelompok4.serena.ui.viewmodel.LoginViewModel
 fun LoginScreen(
     viewModel: LoginViewModel = viewModel(),
     onNavigateToRegister: () -> Unit = {},
-    onNavigateToMain: () -> Unit = {}
+    onNavigateToMain: (String) -> Unit = {} // kirim email
 ) {
     val email = viewModel.email.value
     val password = viewModel.password.value
@@ -134,17 +136,23 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 // Login Button
+                val context = LocalContext.current
                 AppButton(
                     text = "Masuk",
                     onClick = {
-                        viewModel.onLoginClick()
-                        // Navigasi ke MainScreen setelah login sukses
-                        onNavigateToMain()
+                        viewModel.onLoginClick(
+                            context = context,
+                            onSuccess = { user ->
+                                onNavigateToMain(user.email)
+                            },
+                            onError = { msg -> Toast.makeText(context, msg, Toast.LENGTH_SHORT).show() }
+                        )
                     },
                     modifier = Modifier.fillMaxWidth(),
                     buttonType = ButtonType.PRIMARY,
                     enabled = email.isNotBlank() && password.isNotBlank()
                 )
+
 
                 Spacer(modifier = Modifier.height(56.dp))
 
