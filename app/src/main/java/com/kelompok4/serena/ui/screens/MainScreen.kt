@@ -124,7 +124,9 @@ fun NavigationGraph(
     ) {
         composable(Routes.HOME) { HomeScreen() }
         composable(Routes.SELF_CARE) { SelfCareScreen() }
-        composable(Routes.KONSELING) { KonselingScreen() }
+        composable(Routes.KONSELING) {
+            CounselingScreen(navController = navController)
+        }
 
         composable("profil/{email}") { backStackEntry ->
             val email = backStackEntry.arguments?.getString("email") ?: ""
