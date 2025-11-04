@@ -18,6 +18,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.serena.ui.screens.SelfCareScreen
 import com.kelompok4.serena.ui.navigation.BottomNavItem
 import com.kelompok4.serena.ui.navigation.Routes
 import com.kelompok4.serena.ui.navigation.getAllBottomNavItems
