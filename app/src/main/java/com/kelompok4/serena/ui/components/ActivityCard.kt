@@ -25,7 +25,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage // <-- IMPORT COIL
+import com.kelompok4.serena.R // <-- IMPORT R
 import com.kelompok4.serena.ui.theme.*
+
 /**
  * Displays a card representing a self‑care activity.  Each card shows a
  * thumbnail image, title, date and a row of statistics (watchers and
@@ -35,11 +38,11 @@ import com.kelompok4.serena.ui.theme.*
 @Composable
 fun ActivityCard(
     modifier: Modifier = Modifier,
-    painterRes: Int,
+    imageUrl: String, // <-- UBAH DARI painterRes: Int
     title: String,
     date: String,
-    views: Int,
-    likes: Int,
+    views: String, // <-- UBAH DARI Int
+    likes: String, // <-- UBAH DARI Int
     onClick: () -> Unit
 ) {
     Card(
@@ -55,10 +58,13 @@ fun ActivityCard(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            Image(
-                painter = painterResource(id = painterRes),
-                contentDescription = null,
+            // <-- GUNAKAN AsyncImage DARI COIL -->
+            AsyncImage(
+                model = imageUrl,
+                contentDescription = title,
                 contentScale = ContentScale.Crop,
+                placeholder = painterResource(id = R.drawable.serena_logo),
+                error = painterResource(id = R.drawable.serena_logo),
                 modifier = Modifier
                     .size(100.dp)
             )
@@ -71,7 +77,8 @@ fun ActivityCard(
                 Text(
                     text = title,
                     style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 2 // Batasi judul
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
@@ -91,7 +98,7 @@ fun ActivityCard(
                     )
                     Spacer(modifier = Modifier.size(4.dp))
                     Text(
-                        text = views.toString(),
+                        text = views, // Tampilkan String
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                     )
@@ -104,7 +111,7 @@ fun ActivityCard(
                     )
                     Spacer(modifier = Modifier.size(4.dp))
                     Text(
-                        text = likes.toString(),
+                        text = likes, // Tampilkan String
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                     )
