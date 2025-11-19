@@ -30,10 +30,13 @@ import com.kelompok4.serena.ui.theme.Primary500
 import com.kelompok4.serena.ui.theme.Primary700
 import com.kelompok4.serena.ui.theme.ProyekakhirpapbTheme
 // import com.kelompok4.serena.R // Import R Anda untuk drawable (jika ada)
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.kelompok4.serena.ui.navigation.Routes
 
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -70,7 +73,7 @@ fun HomeScreen() {
             Spacer(modifier = Modifier.height(24.dp))
             JournalSection()
             Spacer(modifier = Modifier.height(24.dp))
-            SleepQualitySection()
+            SleepQualitySection(navController)
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
@@ -389,13 +392,13 @@ fun JournalSection() {
 }
 
 @Composable
-fun SleepQualitySection() {
-    Column(modifier = Modifier.fillMaxWidth()) {
+fun SleepQualitySection(navController: NavController) { // 3. Tambahkan parameter di sini juga    Column(modifier = Modifier.fillMaxWidth()) {
         SectionHeader(title = "Kualitas Tidur", onSeeAllClick = { /*TODO*/ })
         Spacer(modifier = Modifier.height(8.dp))
 
         // Kartu Kualitas Tidur (Putih)
         Card(
+            onClick = { navController.navigate(Routes.SleepQuality) },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
@@ -457,7 +460,7 @@ fun SleepQualitySection() {
             }
         }
     }
-}
+
 
 
 // --- KOMPONEN BANTU ---
@@ -487,6 +490,5 @@ fun SectionHeader(title: String, onSeeAllClick: () -> Unit) {
 fun HomeScreenPreview() {
     // Bungkus dengan Tema proyek Anda
     ProyekakhirpapbTheme {
-        HomeScreen()
-    }
+        HomeScreen(navController = rememberNavController())    }
 }
