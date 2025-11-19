@@ -130,8 +130,7 @@ fun NavigationGraph(
         startDestination = Routes.HOME,
         modifier = modifier
     ) {
-        composable(Routes.HOME) { HomeScreen() }
-
+        composable(Routes.HOME) { HomeScreen(navController = navController) }
         // ✅ tambahkan navController ke SelfCareScreen agar navigate() berfungsi
         composable(Routes.SELF_CARE) { SelfCareScreen(navController = navController) }
 
