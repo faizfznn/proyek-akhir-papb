@@ -1,20 +1,13 @@
 package com.kelompok4.serena.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.serena.ui.screens.ActivityDetailScreen // Pastikan import ini benar
-import com.example.serena.ui.screens.ArticleDetailScreen // Pastikan import ini benar
-import com.kelompok4.serena.ui.screens.LoginScreen
-import com.kelompok4.serena.ui.screens.MainScreen
-import com.kelompok4.serena.ui.screens.OnboardingScreen
-import com.kelompok4.serena.ui.screens.RegisterScreen
-import com.kelompok4.serena.ui.screens.SplashScreen
-import java.net.URLDecoder
-import java.net.URLEncoder
+import com.kelompok4.serena.ui.screens.*
 
 @Composable
 fun RootNavGraph(
@@ -58,7 +51,6 @@ fun RootNavGraph(
             )
         }
 
-
         composable(Routes.LOGIN) {
             LoginScreen(
                 onNavigateToRegister = {
@@ -83,57 +75,8 @@ fun RootNavGraph(
             val email = backStackEntry.arguments?.getString("email") ?: ""
             MainScreen(userEmail = email)
         }
-
-        // --- PINDAHKAN KODE ARTIKEL DAN ACTIVITY DETAIL KE SINI ---
-
-        composable(
-            route = "articleDetail/{title}/{imageUrl}/{description}",
-            arguments = listOf(
-                navArgument("title") { type = NavType.StringType },
-                navArgument("imageUrl") { type = NavType.StringType },
-                navArgument("description") { type = NavType.StringType }
-            )
-        ) { backStackEntry ->
-            val title = backStackEntry.arguments?.getString("title")?.let { URLDecoder.decode(it, "UTF-8") } ?: ""
-            val imageUrl = backStackEntry.arguments?.getString("imageUrl")?.let { URLDecoder.decode(it, "UTF-8") } ?: ""
-            val description = backStackEntry.arguments?.getString("description")?.let { URLDecoder.decode(it, "UTF-8") } ?: ""
-
-            // Pastikan memanggil ArticleDetailScreen dengan parameter yang benar
-            ArticleDetailScreen(
-                navController = navController,
-                title = title,
-                imageUrl = imageUrl,
-                description = description
-            )
-        }
-
-        composable(
-            route = "activityDetail/{videoId}/{title}/{uploadDate}/{description}",
-            arguments = listOf(
-                navArgument("videoId") { type = NavType.StringType },
-                navArgument("title") { type = NavType.StringType },
-                navArgument("uploadDate") { type = NavType.StringType },
-                navArgument("description") { type = NavType.StringType }
-            )
-        ) { backStackEntry ->
-            val videoId = backStackEntry.arguments?.getString("videoId") ?: ""
-            val title = backStackEntry.arguments?.getString("title")?.let { URLDecoder.decode(it, "UTF-8") } ?: ""
-            val uploadDate = backStackEntry.arguments?.getString("uploadDate")?.let { URLDecoder.decode(it, "UTF-8") } ?: ""
-            val description = backStackEntry.arguments?.getString("description")?.let { URLDecoder.decode(it, "UTF-8") } ?: ""
-
-            // Pastikan memanggil ActivityDetailScreen dengan parameter yang benar
-            ActivityDetailScreen(
-                navController = navController,
-                videoId = videoId,
-                title = title,
-                uploadDate = uploadDate,
-                description = description
-            )
-        }
-
-        // composable(Routes.KONSELING) {
-        //    CounselingScheduleScreen(navController = navController)
-        // }
-
-    } // <-- NavHost ditutup di sini
+//        composable(Routes.KONSELING) {
+//            CounselingScheduleScreen(navController = navController)
+//        }
+    }
 }

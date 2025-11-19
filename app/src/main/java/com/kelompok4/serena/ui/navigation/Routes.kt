@@ -27,6 +27,8 @@ object Routes {
     const val ArticleDetail = "articleDetail/{id}"
     const val Activities = "activities"
     const val ActivityDetail = "activityDetail/{id}"
+    const val SleepQuality = "sleepQuality"
+
 }
 
 
