@@ -21,6 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage // Import Coil
+import com.kelompok4.serena.R // Import R untuk placeholder
 
 /**
  * A composable representing a single article preview card.  It can be
@@ -29,10 +31,18 @@ import androidx.compose.ui.unit.dp
  * flag.  Pass in a [painterRes] for the thumbnail, the title and
  * subtitle, and a callback to handle click events.
  */
+
+import coil.compose.AsyncImage // Import Coil
+
+/**
+ * Versi modifikasi dari ArticleCard.
+ * [painterRes] diubah menjadi [imageUrl] dengan tipe String.
+ * Menggunakan Coil (AsyncImage) untuk memuat gambar dari URL.
+ */
 @Composable
 fun ArticleCard(
     modifier: Modifier = Modifier,
-    painterRes: Int,
+    imageUrl: String?, // Ubah dari painterRes: Int
     title: String,
     subtitle: String? = null,
     isVertical: Boolean = false,
@@ -51,10 +61,13 @@ fun ArticleCard(
             Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Image(
-                    painter = painterResource(id = painterRes),
+                // Gunakan AsyncImage dari Coil
+                AsyncImage(
+                    model = imageUrl,
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
+                    placeholder = painterResource(id = R.drawable.serena_logo), // Placeholder
+                    error = painterResource(id = R.drawable.serena_logo), // Gambar jika error
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(180.dp)
@@ -63,14 +76,16 @@ fun ArticleCard(
                     Text(
                         text = title,
                         style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onSurface
+                        color = MaterialTheme.colorScheme.onSurface,
+                        maxLines = 2
                     )
                     subtitle?.let {
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = it,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                            maxLines = 3
                         )
                     }
                 }
@@ -81,10 +96,13 @@ fun ArticleCard(
                     .padding(8.dp)
                     .width(160.dp)
             ) {
-                Image(
-                    painter = painterResource(id = painterRes),
+                // Gunakan AsyncImage dari Coil
+                AsyncImage(
+                    model = imageUrl,
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
+                    placeholder = painterResource(id = R.drawable.serena_logo),
+                    error = painterResource(id = R.drawable.serena_logo),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(100.dp)
