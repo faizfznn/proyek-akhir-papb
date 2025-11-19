@@ -78,5 +78,13 @@ fun RootNavGraph(
 //        composable(Routes.KONSELING) {
 //            CounselingScheduleScreen(navController = navController)
 //        }
+
+        composable(Routes.SleepQuality) {
+            SleepQualityScreen(navController = navController)
+        }
+
+        composable(Routes.SleepHistory) {
+            SleepHistoryScreen(navController = navController)
+        }
     }
 }
