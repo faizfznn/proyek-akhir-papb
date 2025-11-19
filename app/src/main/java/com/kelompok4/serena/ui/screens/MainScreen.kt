@@ -27,6 +27,8 @@ import com.example.serena.ui.screens.ActivityDetailScreen
 import com.example.serena.ui.screens.ArticleDetailScreen
 import com.example.serena.ui.screens.ArticleListScreen
 import com.example.serena.ui.screens.SelfCareScreen
+import com.example.serena.ui.screens.*
+
 
 // ✅ Ganti import agar sesuai package kamu, bukan com.example.serena
 // import com.example.serena.ui.screens.SelfCareScreen ❌
@@ -163,6 +165,10 @@ fun NavigationGraph(
         composable("activityDetail/{id}") { backStackEntry ->
             val activityId = backStackEntry.arguments?.getString("id")?.toIntOrNull() ?: 0
             ActivityDetailScreen(navController = navController, activityId = activityId)
+        }
+        composable(Routes.SleepQuality) {
+            // Pastikan file/fungsi SleepQualityScreen sudah dibuat
+            SleepQualityScreen(navController = navController)
         }
     }
 }
