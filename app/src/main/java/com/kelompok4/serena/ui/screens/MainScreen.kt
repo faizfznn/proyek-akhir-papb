@@ -14,22 +14,22 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType // <-- 1. IMPORT TAMBAHAN
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument // <-- 2. IMPORT TAMBAHAN
 import com.kelompok4.serena.ui.navigation.BottomNavItem
 import com.kelompok4.serena.ui.navigation.Routes
 import com.kelompok4.serena.ui.navigation.getAllBottomNavItems
 import com.kelompok4.serena.ui.theme.*
-// Import screen dari package yang benar
+import com.kelompok4.serena.ui.screens.*
 import com.example.serena.ui.screens.ActivityDetailScreen
 import com.example.serena.ui.screens.ArticleDetailScreen
 import com.example.serena.ui.screens.ArticleListScreen
 import com.example.serena.ui.screens.SelfCareScreen
-import java.net.URLDecoder // <-- 3. IMPORT TAMBAHAN
+
+// ✅ Ganti import agar sesuai package kamu, bukan com.example.serena
+// import com.example.serena.ui.screens.SelfCareScreen ❌
 
 @Composable
 fun MainScreen(userEmail: String) {
@@ -132,7 +132,7 @@ fun NavigationGraph(
     ) {
         composable(Routes.HOME) { HomeScreen() }
 
-        // SelfCareScreen sekarang menerima navController agar bisa navigasi ke detail
+        // ✅ tambahkan navController ke SelfCareScreen agar navigate() berfungsi
         composable(Routes.SELF_CARE) { SelfCareScreen(navController = navController) }
 
         composable(Routes.KONSELING) {
@@ -155,49 +155,15 @@ fun NavigationGraph(
             EditValueScreen(navController = navController, userEmail = email, field = field)
         }
 
-        // --- 4. PERBARUI BLOK INI ---
-        composable(
-            route = "articleDetail/{title}/{imageUrl}/{description}",
-            arguments = listOf(
-                navArgument("title") { type = NavType.StringType },
-                navArgument("imageUrl") { type = NavType.StringType },
-                navArgument("description") { type = NavType.StringType }
-            )
-        ) { backStackEntry ->
-            val title = backStackEntry.arguments?.getString("title")?.let { URLDecoder.decode(it, "UTF-8") } ?: ""
-            val imageUrl = backStackEntry.arguments?.getString("imageUrl")?.let { URLDecoder.decode(it, "UTF-8") } ?: ""
-            val description = backStackEntry.arguments?.getString("description")?.let { URLDecoder.decode(it, "UTF-8") } ?: ""
-
-            ArticleDetailScreen(
-                navController = navController,
-                title = title,
-                imageUrl = imageUrl,
-                description = description
-            )
+        // ✅ Tambahkan route untuk halaman detail artikel & kegiatan
+        composable("articleDetail/{id}") { backStackEntry ->
+            val articleId = backStackEntry.arguments?.getString("id")?.toIntOrNull() ?: 0
+            ArticleDetailScreen(navController = navController, articleId = articleId)
         }
 
-        // --- 5. PERBARUI BLOK INI ---
-        composable(
-            route = "activityDetail/{videoId}/{title}/{uploadDate}/{description}",
-            arguments = listOf(
-                navArgument("videoId") { type = NavType.StringType },
-                navArgument("title") { type = NavType.StringType },
-                navArgument("uploadDate") { type = NavType.StringType },
-                navArgument("description") { type = NavType.StringType }
-            )
-        ) { backStackEntry ->
-            val videoId = backStackEntry.arguments?.getString("videoId") ?: ""
-            val title = backStackEntry.arguments?.getString("title")?.let { URLDecoder.decode(it, "UTF-8") } ?: ""
-            val uploadDate = backStackEntry.arguments?.getString("uploadDate")?.let { URLDecoder.decode(it, "UTF-8") } ?: ""
-            val description = backStackEntry.arguments?.getString("description")?.let { URLDecoder.decode(it, "UTF-8") } ?: ""
-
-            ActivityDetailScreen(
-                navController = navController,
-                videoId = videoId,
-                title = title,
-                uploadDate = uploadDate,
-                description = description
-            )
+        composable("activityDetail/{id}") { backStackEntry ->
+            val activityId = backStackEntry.arguments?.getString("id")?.toIntOrNull() ?: 0
+            ActivityDetailScreen(navController = navController, activityId = activityId)
         }
     }
 }

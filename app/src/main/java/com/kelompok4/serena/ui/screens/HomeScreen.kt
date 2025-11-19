@@ -390,6 +390,8 @@ fun JournalSection() {
 
 @Composable
 fun SleepQualitySection() {
+    onClick = { navController.navigate(Routes.SleepQuality) }
+
     Column(modifier = Modifier.fillMaxWidth()) {
         SectionHeader(title = "Kualitas Tidur", onSeeAllClick = { /*TODO*/ })
         Spacer(modifier = Modifier.height(8.dp))

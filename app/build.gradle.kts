@@ -41,19 +41,6 @@ android {
 }
 
 dependencies {
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0") // Atau kotlinx-serialization
-    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0") // Opsional, untuk debugging
-
-    // Coil untuk memuat gambar dari URL
-
-    implementation("io.coil-kt:coil-compose:2.5.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.2")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.2")
-
-    // Jetpack Media3 (ExoPlayer) untuk memutar video
-    implementation("androidx.media3:media3-exoplayer:1.2.0")
-    implementation("androidx.media3:media3-ui:1.2.0")
     implementation("com.google.code.gson:gson:2.11.0")
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.animation)
