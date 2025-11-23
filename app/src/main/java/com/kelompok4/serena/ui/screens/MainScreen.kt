@@ -166,9 +166,14 @@ fun NavigationGraph(
             val activityId = backStackEntry.arguments?.getString("id")?.toIntOrNull() ?: 0
             ActivityDetailScreen(navController = navController, activityId = activityId)
         }
+
         composable(Routes.SleepQuality) {
             // Pastikan file/fungsi SleepQualityScreen sudah dibuat
             SleepQualityScreen(navController = navController)
+        }
+
+        composable(Routes.SleepHistory) {
+            SleepHistoryScreen(navController = navController)
         }
     }
 }

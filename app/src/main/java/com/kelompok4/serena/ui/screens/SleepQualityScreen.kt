@@ -343,20 +343,15 @@ fun SleepQualityScreen(navController: NavHostController) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "Riwayat Tidur",
-                    style = AppTypography.H5.bold
-                )
-                // FIXED: Menambahkan import clickable dan mengganti Body2 ke Body1
-                Text(
-                    text = "Lihat semua",
-                    style = AppTypography.Body1.medium,
-                    color = Primary500,
-                    modifier = Modifier.clickable {
-                        // Sekarang Routes sudah dikenali dan SleepHistory sudah ada
+                Text(text = "Riwayat Tidur", style = AppTypography.H5.bold)
+                TextButton(
+                    onClick = {
+                        android.util.Log.d("SleepQuality", "Navigate to SleepHistory")
                         navController.navigate(Routes.SleepHistory)
                     }
-                )
+                ) {
+                    Text(text = "Lihat semua", style = AppTypography.Body1.medium)
+                }
             }
 
             // --- CARD: Item Riwayat Tidur (Fixed) ---
