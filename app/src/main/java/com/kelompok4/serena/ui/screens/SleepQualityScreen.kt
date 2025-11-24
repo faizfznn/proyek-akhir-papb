@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.kelompok4.serena.ui.theme.*
+import com.kelompok4.serena.ui.navigation.Routes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -342,17 +343,15 @@ fun SleepQualityScreen(navController: NavHostController) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "Riwayat Tidur",
-                    style = AppTypography.H5.bold
-                )
-                // FIXED: Menambahkan import clickable dan mengganti Body2 ke Body1
-                Text(
-                    text = "Lihat semua",
-                    style = AppTypography.Body1.medium, // Fallback dari Body2
-                    color = Primary500,
-                    modifier = Modifier.clickable { /* TODO: Navigate to full history */ }
-                )
+                Text(text = "Riwayat Tidur", style = AppTypography.H5.bold)
+                TextButton(
+                    onClick = {
+                        android.util.Log.d("SleepQuality", "Navigate to SleepHistory")
+                        navController.navigate(Routes.SleepHistory)
+                    }
+                ) {
+                    Text(text = "Lihat semua", style = AppTypography.Body1.medium)
+                }
             }
 
             // --- CARD: Item Riwayat Tidur (Fixed) ---
